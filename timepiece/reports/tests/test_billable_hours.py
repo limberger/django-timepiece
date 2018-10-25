@@ -3,7 +3,7 @@ from dateutil.relativedelta import relativedelta
 import json
 
 from django.contrib.auth.models import Permission
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db.models import Q
 
 from timepiece.forms import DATE_FORM_FORMAT

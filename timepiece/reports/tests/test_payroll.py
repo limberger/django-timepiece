@@ -2,7 +2,7 @@ import datetime
 from decimal import Decimal
 
 from django.conf import settings
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.auth.models import Permission, User
 from django.test import TestCase
 

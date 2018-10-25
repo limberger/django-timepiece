@@ -8,7 +8,7 @@ from six.moves.urllib.parse import urlencode
 
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils import timezone
 from django.test import TestCase
 

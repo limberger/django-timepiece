@@ -2,7 +2,7 @@ from collections import OrderedDict
 
 from django.apps import apps
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 from django.utils.encoding import python_2_unicode_compatible
 
@@ -26,7 +26,7 @@ User.add_to_class('get_absolute_url', _get_absolute_url)
 
 @python_2_unicode_compatible
 class UserProfile(models.Model):
-    user = models.OneToOneField(User, unique=True, related_name='profile')
+    user = models.OneToOneField(User, unique=True, related_name='profile', on_delete=models.CASCADE)
     hours_per_week = models.DecimalField(
         max_digits=8, decimal_places=2, default=40)
 
@@ -100,14 +100,14 @@ class Business(models.Model):
         ordering = ('name',)
         verbose_name_plural = 'Businesses'
         permissions = (
-            ('view_business', 'Can view businesses'),
+            ('perm_view_business', 'Can view businesses'),
         )
 
     def __str__(self):
         return self.get_display_name()
 
     def get_absolute_url(self):
-        return reverse('view_business', args=(self.pk,))
+        return reverse('perm_view_business', args=(self.pk,))
 
     def get_display_name(self):
         return self.short_name or self.name
@@ -128,19 +128,19 @@ class Project(models.Model):
     tracker_url = models.CharField(
         max_length=255, blank=True, null=False, default="")
     business = models.ForeignKey(
-        Business, related_name='new_business_projects')
-    point_person = models.ForeignKey(User, limit_choices_to={'is_staff': True})
+        Business, related_name='new_business_projects',on_delete=models.CASCADE)
+    point_person = models.ForeignKey(User, limit_choices_to={'is_staff': True},on_delete=models.CASCADE)
     users = models.ManyToManyField(
         User, related_name='user_projects', through='ProjectRelationship')
     activity_group = models.ForeignKey(
         'entries.ActivityGroup', related_name='activity_group', null=True,
-        blank=True, verbose_name='restrict activities to')
+        blank=True, verbose_name='restrict activities to',on_delete=models.CASCADE)
     type = models.ForeignKey(
         Attribute, limit_choices_to={'type': 'project-type'},
-        related_name='projects_with_type')
+        related_name='projects_with_type',on_delete=models.CASCADE)
     status = models.ForeignKey(
         Attribute, limit_choices_to={'type': 'project-status'},
-        related_name='projects_with_status')
+        related_name='projects_with_status',on_delete=models.CASCADE)
     description = models.TextField()
 
     objects = models.Manager()
@@ -150,7 +150,7 @@ class Project(models.Model):
         db_table = 'timepiece_project'  # Using legacy table name.
         ordering = ('name', 'status', 'type',)
         permissions = (
-            ('view_project', 'Can view project'),
+            ('perm_view_project', 'Can view project'),
             ('email_project_report', 'Can email project report'),
             ('view_project_time_sheet', 'Can view project time sheet'),
             ('export_project_time_sheet', 'Can export project time sheet'),
@@ -165,7 +165,7 @@ class Project(models.Model):
         return self.type.billable
 
     def get_absolute_url(self):
-        return reverse('view_project', args=(self.pk,))
+        return reverse('perm_view_project', args=(self.pk,))
 
     def get_active_contracts(self):
         """Returns all associated contracts which are not marked complete."""
@@ -189,8 +189,8 @@ class RelationshipType(models.Model):
 class ProjectRelationship(models.Model):
     types = models.ManyToManyField(
         RelationshipType, blank=True, related_name='project_relationships')
-    user = models.ForeignKey(User, related_name='project_relationships')
-    project = models.ForeignKey(Project, related_name='project_relationships')
+    user = models.ForeignKey(User, related_name='project_relationships',on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, related_name='project_relationships',on_delete=models.CASCADE)
 
     class Meta:
         db_table = 'timepiece_projectrelationship'  # Using legacy table name.

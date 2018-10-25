@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.test import TestCase
 
 from timepiece.tests import factories
@@ -233,7 +233,7 @@ class TestListProjects(ViewTestMixin, TestCase):
     template_name = 'timepiece/project/list.html'
     factory = factories.Project
     model = Project
-    permissions = ('crm.view_project',)
+    permissions = ('crm.perm_view_project',)
 
     def setUp(self):
         super(TestListProjects, self).setUp()
@@ -333,7 +333,7 @@ class TestViewProject(ViewTestMixin, TestCase):
     template_name = 'timepiece/project/view.html'
     model = Project
     factory = factories.Project
-    permissions = ('crm.view_project',)
+    permissions = ('crm.perm_view_project',)
     pk_url_kwarg = 'project_id'
 
     def setUp(self):

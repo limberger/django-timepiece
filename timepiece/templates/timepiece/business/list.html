@@ -37,7 +37,7 @@
                 <tbody>
                     {% for business in object_list %}
                         <tr>
-                            <td><a href='{% url 'view_business' business.pk %}'>{{ business.name }}</a></td>
+                            <td><a href='{% url 'perm_view_business' business.pk %}'>{{ business.name }}</a></td>
                             <td>{{ business.description|truncatewords:8 }}</td>
                         </tr>
                     {% endfor %}

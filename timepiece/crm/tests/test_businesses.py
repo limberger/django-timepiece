@@ -1,4 +1,4 @@
-from django.core.urlresolvers import reverse_lazy
+from django.urls import reverse_lazy
 from django.test import TestCase
 
 from timepiece.tests import factories
@@ -218,7 +218,7 @@ class TestListBusinesses(ViewTestMixin, TestCase):
     template_name = 'timepiece/business/list.html'
     factory = factories.Business
     model = Business
-    permissions = ('crm.view_business',)
+    permissions = ('crm.perm_view_business',)
 
     def setUp(self):
         super(TestListBusinesses, self).setUp()
@@ -298,11 +298,11 @@ class TestListBusinesses(ViewTestMixin, TestCase):
 
 
 class TestViewBusiness(ViewTestMixin, TestCase):
-    url_name = 'view_business'
+    url_name = 'perm_view_business'
     template_name = 'timepiece/business/view.html'
     model = Business
     factory = factories.Business
-    permissions = ('crm.view_business',)
+    permissions = ('crm.perm_view_business',)
     pk_url_kwarg = 'business_id'
 
     def setUp(self):

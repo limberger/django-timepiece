@@ -32,8 +32,8 @@
                 <tr>
                     <th>Business</th>
                     <td>
-                        {% if perms.crm.view_business  %}
-                            <a href="{% url 'view_business' object.business.pk %}">{{ object.business }}</a>
+                        {% if perms.crm.perm_view_business  %}
+                            <a href="{% url 'perm_view_business' object.business.pk %}">{{ object.business }}</a>
                         {% else %}
                             {{ object.business }}
                         {% endif %}

@@ -2,7 +2,7 @@ import mock
 
 from django.contrib.auth.models import User, Permission
 from django.contrib.contenttypes.models import ContentType
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.test import TestCase
 
 from timepiece.tests import factories

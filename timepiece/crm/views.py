@@ -6,7 +6,7 @@ from six.moves.urllib.parse import urlencode
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import User
-from django.core.urlresolvers import reverse, reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.db import transaction
 from django.db.models import Sum
 from django.http import HttpResponseRedirect, HttpResponseForbidden, Http404
@@ -343,7 +343,7 @@ class ProjectTimesheetCSV(CSVViewMixin, ProjectTimesheet):
 # Businesses
 
 
-@cbv_decorator(permission_required('crm.view_business'))
+@cbv_decorator(permission_required('crm.perm_view_business'))
 class ListBusinesses(SearchListView):
     model = Business
     paginate_by = 20
@@ -352,7 +352,7 @@ class ListBusinesses(SearchListView):
     template_name = 'timepiece/business/list.html'
 
 
-@cbv_decorator(permission_required('crm.view_business'))
+@cbv_decorator(permission_required('crm.perm_view_business'))
 class ViewBusiness(DetailView):
     model = Business
     pk_url_kwarg = 'business_id'

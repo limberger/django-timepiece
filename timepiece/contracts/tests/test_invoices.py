@@ -5,7 +5,7 @@ import random
 from six.moves.urllib.parse import urlencode
 
 from django.contrib.auth.models import Permission
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.test import TestCase
 
 from timepiece import utils

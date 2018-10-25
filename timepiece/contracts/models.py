@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.db import models
 from django.db.models import Sum
 from django.db.models.expressions import F, Func, Value
@@ -223,7 +223,7 @@ class ContractHour(models.Model):
     hours = models.DecimalField(
         max_digits=8, decimal_places=2, default=0)
     contract = models.ForeignKey(
-        ProjectContract, related_name='contract_hours')
+        ProjectContract, related_name='contract_hours',on_delete=models.CASCADE)
     date_requested = models.DateField()
     date_approved = models.DateField(blank=True, null=True)
     status = models.IntegerField(
@@ -334,8 +334,8 @@ class ContractHour(models.Model):
 
 @python_2_unicode_compatible
 class ContractAssignment(models.Model):
-    contract = models.ForeignKey(ProjectContract, related_name='assignments')
-    user = models.ForeignKey(User, related_name='assignments')
+    contract = models.ForeignKey(ProjectContract, related_name='assignments',on_delete = models.CASCADE)
+    user = models.ForeignKey(User, related_name='assignments',on_delete=models.CASCADE)
     start_date = models.DateField()
     end_date = models.DateField()
     num_hours = models.DecimalField(max_digits=8, decimal_places=2, default=0)
@@ -438,8 +438,8 @@ class EntryGroup(models.Model):
         (NOT_INVOICED, 'Not Invoiced'),
     ))
 
-    user = models.ForeignKey(User, related_name='entry_group')
-    project = models.ForeignKey('crm.Project', related_name='entry_group')
+    user = models.ForeignKey(User, related_name='entry_group', on_delete=models.CASCADE)
+    project = models.ForeignKey('crm.Project', related_name='entry_group',on_delete=models.CASCADE)
     status = models.CharField(max_length=24, choices=STATUSES.items(),
                               default=INVOICED)
     number = models.CharField("Reference #", max_length=50, blank=True,
