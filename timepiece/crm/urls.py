@@ -30,6 +30,11 @@ urlpatterns = [
         name='delete_user'),
 
     # User timesheets
+    url(r'^user/<int:user_id>/timesheet/'
+        '(?:(<int:user_id>overview|all-entries|daily-summary)/)?$',
+        views.view_user_timesheet,
+        name='view_user_timesheet'),
+
     url(r'^user/(?P<user_id>\d+)/timesheet/'
         '(?:(?P<active_tab>overview|all-entries|daily-summary)/)?$',
         views.view_user_timesheet,
@@ -50,7 +55,7 @@ urlpatterns = [
         name='create_project'),
     url(r'^project/(?P<project_id>\d+)/$',
         views.ViewProject.as_view(),
-        name='perm_view_project'),
+        name='view_project'),
     url(r'^project/(?P<project_id>\d+)/edit/$',
         views.EditProject.as_view(),
         name='edit_project'),
@@ -75,7 +80,7 @@ urlpatterns = [
         name='create_business'),
     url(r'^business/(?P<business_id>\d+)/$',
         views.ViewBusiness.as_view(),
-        name='perm_view_business'),
+        name='view_business'),
     url(r'^business/(?P<business_id>\d+)/edit/$',
         views.EditBusiness.as_view(),
         name='edit_business'),

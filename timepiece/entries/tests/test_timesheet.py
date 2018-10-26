@@ -61,7 +61,7 @@ class MyLedgerTest(ViewTestMixin, LogTimeMixin, TestCase):
         self.superuser = factories.Superuser()
         self.devl_activity = factories.Activity(billable=True)
         self.activity = factories.Activity()
-        self.url = reverse('view_user_timesheet', args=(self.user.pk,))
+        self.url = reverse('view_user_timesheet', args=[self.user.pk])
 
     def login_with_permissions(self):
         view_entry_summary = Permission.objects.get(
@@ -1889,7 +1889,7 @@ class HourlySummaryTest(ViewTestMixin, TestCase):
 
         self.now = timezone.now()
         self.month = self.now.replace(day=1)
-        self.url = reverse('view_user_timesheet', args=(self.user.pk,))
+        self.url = reverse('view_user_timesheet', args=[self.user.pk])
         self.login_user(self.user)
 
     def create_month_entries(self):

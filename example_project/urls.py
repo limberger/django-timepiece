@@ -11,13 +11,15 @@ urlpatterns = [
     url(r'', include('timepiece.urls')),
 
     # authentication views
-    url(r'^accounts/login/$', auth_views.LoginView,
-        name='auth_login'),
+    url(r'^accounts/login/$', auth_views.LoginView.as_view(), name='auth_login'),
     url(r'^accounts/logout/$', auth_views.LogoutView,
         name='auth_logout'),
     url(r'^accounts/password-change/$',
         auth_views.PasswordChangeView,
         name='change_password'),
+    url(r'^accounts/password_reset/$',
+    auth_views.PasswordResetView.as_view(template_name='password_reset_form.html'),name='password_reset'),
+
     # url(r'^accounts/password-change/done/$',
     #     auth_views.password_change_done),
     # url(r'^accounts/password-reset/$',

@@ -73,7 +73,7 @@ def reject_user_timesheet(request, user_id):
         msg = 'You must provide a month and year for entries to be rejected.'
         messages.error(request, msg)
 
-    url = reverse('view_user_timesheet', args=(user_id,))
+    url = reverse('view_user_timesheet', args=[user_id])
     return HttpResponseRedirect(url)
 
 
@@ -94,7 +94,7 @@ def view_user_timesheet(request, user_id, active_tab):
                 # Redirect to form_user's time sheet.
                 # Do not use request.GET in urlencode to prevent redirect
                 # loop caused by yearmonth parameter.
-                url = reverse('view_user_timesheet', args=(form_user.pk,))
+                url = reverse('view_user_timesheet', args=[form_user.pk])
                 request_data = {
                     'month': from_date.month,
                     'year': from_date.year,
@@ -203,7 +203,7 @@ def change_user_timesheet(request, user_id, action):
     }
     entries = entries.filter(status=filter_status[action])
 
-    return_url = reverse('view_user_timesheet', args=(user_id,))
+    return_url = reverse('view_user_timesheet', args=[user_id])
     return_url += '?%s' % urlencode({
         'year': from_date.year,
         'month': from_date.month,
